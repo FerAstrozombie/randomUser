@@ -10,13 +10,12 @@ const User = () => {
 
     const handleClick = async () => {
         await getUser().then((res) => {
-            console.log(res.data);
             setUser(res.data.results);
-            createUser();
+            createUser(res.data.results);
         }).catch((error) => console.log(error))
     }
 
-    const createUser = () => {
+    const createUser = async (user) => {
 
         const userAdd = {
             nombre: user[0].name.first,
@@ -29,7 +28,7 @@ const User = () => {
             telefono: user[0].phone,
             email: user[0].email,
         }
-        saveUser(userAdd).then(() => {
+        await saveUser(userAdd).then(() => {
             toast.success('👦 usuario agregado', {
                 position: "top-right",
                 autoClose: 5000,
@@ -47,8 +46,8 @@ const User = () => {
         <>
             {
                 user.length === 0 ?
-
                     <div>
+                        <h2>Bienvenido al generador de usuarios</h2>
                         <h3>No has generado ningun usuario</h3>
                         <div className="usuarios">
                             <button onClick={handleClick}>Generar usuario</button>
@@ -70,11 +69,11 @@ const User = () => {
                         />
                     </div>
                     :
-
                     <div>
                         {
                             user.map((user, index) => (
                                 <div key={index}>
+                                    <h2>Bienvenido al generador de usuarios</h2>
                                     <img className="avatar" src={user.picture.large} alt="avatar" />
                                     <p>{user.name.first + " " + user.name.last}</p>
                                     <div className="usuarios">
@@ -99,7 +98,6 @@ const User = () => {
                             ))
                         }
                     </div>
-
             }
         </>
     )

@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { getUsers } from "../../services/user.js";
 import Loader from "../Loader/Loader.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Usuarios = () => {
 
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const getUsersFinales = async () => {
         try {
@@ -18,10 +20,12 @@ const Usuarios = () => {
 
     useEffect(() => {
         setLoading(true)
-        getUsersFinales().then((res) => {
-            setUsers(res)
-            setLoading(false)
-        }).catch((error) => console.log(error))
+        setTimeout(() => {
+            getUsersFinales().then((res) => {
+                setUsers(res)
+                setLoading(false)
+            }).catch((error) => console.log(error))
+        }, 1000);
     }, []);
 
     return (
@@ -29,8 +33,11 @@ const Usuarios = () => {
             {loading ?
                 <Loader />
                 :
-                users ?
+                users.length > 0 ?
                     <div className="usuariosAcomodados">
+                        <button onClick={() => navigate("/")}>
+                            Inicio
+                        </button>
                         <table>
                             <thead>
                                 <tr>
@@ -69,7 +76,12 @@ const Usuarios = () => {
                         </table>
                     </div >
                     :
-                    <h2>No hay usuarios generados</h2>
+                    <div>
+                        <h2>No hay usuarios generados</h2>
+                        <button onClick={() => navigate("/")}>
+                            Inicio
+                        </button>
+                    </div>
             }
         </>
     )

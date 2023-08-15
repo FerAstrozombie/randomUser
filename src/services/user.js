@@ -19,7 +19,6 @@ export const saveUser = async ( body ) => {
     const response = await axios.post("http://localhost:8080/random", {
         body
     }).then((res) => {
-        console.log(res);
         return res
     }).catch((error) => {
         return error
