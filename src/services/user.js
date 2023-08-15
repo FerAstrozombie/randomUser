@@ -16,7 +16,7 @@ export const getUser = async () => {
 
 export const saveUser = async ( body ) => {
 
-    const response = await axios.post("http://localhost:8080/random", {
+    const response = await axios.post("https://backrandonuser-tmws-dev.fl0.io/random", {
         body
     }).then((res) => {
         return res
@@ -27,7 +27,7 @@ export const saveUser = async ( body ) => {
 }
 
 export const getUsers = async () => {
-    const response = await axios.get("http://localhost:8080/random")
+    const response = await axios.get("https://backrandonuser-tmws-dev.fl0.io/random")
     .then((res) => {
         return res.data.users
     }).catch((error) => {
